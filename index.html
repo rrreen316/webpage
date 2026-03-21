@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>rrreen | works</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Space+Mono:wght@400;700&family=Noto+Sans+JP:wght@300;400;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<div class="bg-glow bg-glow-1"></div>
+<div class="bg-glow bg-glow-2"></div>
+
+<!-- ナビゲーション -->
+
+
+<!-- ヒーロー（一番上の大きいエリア） -->
+<section id="hero">
+  <p class="hero-eyebrow">// Personal Developer</p>
+  <h1 class="hero-name">rrreen</h1>
+  <p class="hero-tagline">
+    <span>使いやすいWebアプリ</span>を作っています。<br>
+    自分が使いたいと思ったものやパッと出たアイデアを形にしてます。
+    初心者です
+  </p>
+  <div class="hero-cta">
+    <a href="#works" class="btn-primary">作品を見る →</a>
+    <a href="#contact" class="btn-outline">SNSをフォロー</a>
+  </div>
+</section>
+
+<!-- 目次 -->
+<section id="toc">
+  <p class="section-label">Contents</p>
+  <div class="toc-grid fade-in">
+    <a href="#about" class="toc-item">
+      <span class="toc-num">01</span> プロフィール
+    </a>
+    <a href="#works" class="toc-item">
+      <span class="toc-num">02</span> 作品一覧
+    </a>
+    <a href="#contact" class="toc-item">
+      <span class="toc-num">03</span> SNS・連絡先
+    </a>
+  </div>
+</section>
+
+<!-- プロフィール -->
+<section id="about">
+  <p class="section-label">01 — About</p>
+  <div class="profile-grid fade-in">
+    <img src="rrreen_0320094944.png" alt="rrreen" class="img"></img>
+    <div>
+      <p class="profile-role">Personal Developer</p>
+      <h2 class="profile-name">rrreen</h2>
+      <p class="profile-bio">
+        グッズの飾る場所がなくなって、<span>飾り方を共有できるアプリ</span>を作ってみようをきっかけに個人開発をはじめました。<br>
+        シンプルで直感的に使えるWebアプリを作ることを目指しています。
+      </p>
+      <!-- 使用技術タグ：増やしたい場合は<span class="tech-tag">技術名</span>をコピーして追加 -->
+      <div class="tech-tags">
+        <span class="tech-tag">HTML</span>
+        <span class="tech-tag">CSS</span>
+        <span class="tech-tag">JavaScript</span>
+        <span class="tech-tag">Supabase</span>
+        <span class="tech-tag">GitHub Pages</span>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- 作品一覧 -->
+<section id="works">
+  <p class="section-label">02 — Works</p>
+  <h2 class="section-title">制作サイト・アプリ一覧</h2>
+  <div class="works-grid">
+
+    <!-- 作品カード1：新しい作品はこのブロックをコピーして追加 -->
+    <div class="work-card fade-in">
+      <div>
+        <p class="work-number">No.001</p>
+        <span class="badge-live">● サイト公開中</span>
+        <h3 class="work-title">かざログ</h3>
+        <p class="work-desc">
+          推しグッズの飾り方を記録・共有できるWebアプリ。グッズの登録・管理から、みんなの飾り方をギャラリーで見てSNSでシェアするところまで無料で使えます。
+        </p>
+        <!-- 作品タグ：増やしたい場合は<span class="work-tag">タグ名</span>をコピーして追加 -->
+        <div class="work-tags">
+          <span class="work-tag">推し活</span>
+          <span class="work-tag">グッズ管理</span>
+          <span class="work-tag">タイムライン共有</span>
+          <span class="work-tag">JavaScript</span>
+          <span class="work-tag">Supabase</span>
+        </div>
+      </div>
+      <!-- ↓ YOUR_URL_HERE をかざログのURLに変更してください -->
+      <a href="https://rrreen316.github.io/oshicollection/" target="_blank" class="work-link">開く →</a>
+    </div>
+
+
+    <div class="work-card fade-in">
+      <div>
+        <p class="work-number">No.002</p>
+        <span class="badge-live">● サイト公開中</span>
+        <h3 class="work-title">就活トラック</h3>
+        <p class="work-desc">
+          就活に関する情報を記録・共有できるWebアプリ。企業ごとの選考状況やエントリーの締め切りを管理でき忘れずに就活を進められます。
+        </p>
+        <!-- 作品タグ：増やしたい場合は<span class="work-tag">タグ名</span>をコピーして追加 -->
+        <div class="work-tags">
+          <span class="work-tag">就活</span>
+          <span class="work-tag">情報管理</span>
+          <span class="work-tag">スケジュール管理</span>
+          <span class="work-tag">JavaScript</span>
+          <span class="work-tag">Supabase</span>
+        </div>
+      </div>
+      <!-- ↓ YOUR_URL_HERE を就活トラックのURLに変更してください -->
+      <a href="https://rrreen316.github.io/syuukatutracker/" target="_blank" class="work-link">開く →</a>
+    </div>
+
+    <!-- 作品カード3（開発中）：公開したらbadge-wipをbadge-liveに変えてwork-linkのhrefにURLを入れる -->
+    <div class="work-card wip fade-in">
+      <div>
+        <p class="work-number">No.003</p>
+        <span class="badge-wip">◐ 開発中</span>
+        <h3 class="work-title">次回作</h3>
+        <p class="work-desc">現在開発中です。公開をお楽しみに。</p>
+      </div>
+      <span class="work-link" style="opacity:0.4;cursor:default;">近日公開</span>
+    </div>
+
+  </div>
+</section>
+
+<!-- SNS・連絡先 -->
+<section id="contact">
+  <p class="section-label">03 — Contact</p>
+  <h2 class="section-title">SNS</h2>
+  <div class="sns-grid fade-in">
+    <!-- ↓ XのURLをご自身のアカウントに変更してください -->
+    <a href="https://x.com/rrreen316" target="_blank" class="sns-card">
+      <span>𝕏</span> @rrreen316
+    </a>
+    <!-- ↓ InstagramのURLとアカウント名をご自身のものに変更してください -->
+    <a href="https://www.instagram.com/rrreen316/" target="_blank" class="sns-card">
+      <span>📷</span> @rrreen316
+    </a>
+  </div>
+</section>
+
+<footer>
+  <p>© 2025 rrreen — built with HTML & GitHub Pages</p>
+</footer>
+
+<script src="js/main.js"></script>
+</body>
+</html>

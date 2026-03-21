@@ -1,0 +1,664 @@
+/* ============================================================
+   ポートフォリオ style.css
+   ============================================================
+
+   【色を変えたい場合】
+   このファイルの一番上にある :root { } の中の値を変えるだけで
+   サイト全体の色が一括で変わります。
+
+   【フォントを変えたい場合】
+   index.htmlの<head>内のGoogle Fontsのリンクと
+   このファイルの --mono / --sans の値を変えてください。
+
+   ============================================================ */
+
+
+/* ============================================================
+   ▼ カラーパレット（ここを変えると全体の色が変わります）
+   ============================================================ */
+:root {
+  /* 背景色 */
+  --bg: #272727;          /* ページ全体の背景（濃い紺） */
+  --surface: #505a71;     /* カードの背景色 */
+  --surface2: #ffffff;    /* カード内のホバー色・タグ背景 */
+  --border: rgba(99,179,237,0.15); /* 枠線の色（薄い青） */
+
+  /* メインカラー（青系） */
+  --primary: #7099ff;          /* 青：リンク・ラベル・アクセント */
+  --primary-glow: rgba(99,179,237,0.3); /* 青のぼかし（ホバー時の光） */
+
+  /* サブカラー（紫系） */
+  --accent: #000000;           /* 紫：グラデーションに使用 */
+  --accent-glow: rgba(0, 0, 0, 0.3); /* 紫のぼかし */
+
+  /* ピンク（グラデーションのアクセント） */
+  --pink: #000000;
+
+  /* テキスト */
+  --text: #90ff79;    /* 通常テキスト */
+  --muted: #ffffff;   /* サブテキスト・説明文 */
+}
+
+
+/* ============================================================
+   ▼ フォント設定
+   ============================================================ */
+:root {
+  --mono: 'Space Mono', monospace; /* 英字・数字・コード風テキスト */
+  --sans: 'Noto Sans JP', sans-serif; /* 日本語テキスト全般 */
+}
+
+
+/* ============================================================
+   ▼ リセット・ベース
+   ============================================================ */
+* { margin: 0; padding: 0; box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body {
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--sans);
+  line-height: 1.7;
+  overflow-x: hidden;
+}
+
+
+/* ============================================================
+   ▼ 背景エフェクト
+   ============================================================ */
+
+/* ノイズテクスチャ（薄いざらつき感） */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.03'/%3E%3C/svg%3E");
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 背景のふんわりした光（左上・右下） */
+.bg-glow {
+  position: fixed;
+  border-radius: 50%;
+  filter: blur(120px); /* 数値を上げるとぼかしが強くなる */
+  pointer-events: none;
+  z-index: 0;
+}
+
+/* 左上の光（--primary-glowの色） */
+.bg-glow-1 {
+  width: 600px; height: 600px;
+  background: var(--primary-glow);
+  top: -200px; left: -200px;
+  animation: drift1 12s ease-in-out infinite alternate;
+}
+
+/* 右下の光（--accent-glowの色） */
+.bg-glow-2 {
+  width: 500px; height: 500px;
+  background: var(--accent-glow);
+  bottom: -150px; right: -150px;
+  animation: drift2 15s ease-in-out infinite alternate;
+}
+
+/* 光がゆっくり動くアニメーション（無効にしたい場合はanimationをnoneに） */
+@keyframes drift1 { to { transform: translate(80px, 60px); } }
+@keyframes drift2 { to { transform: translate(-60px, -80px); } }
+
+
+/* ============================================================
+   ▼ ナビゲーションバー
+   ============================================================ */
+nav {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 100;
+  padding: 20px 40px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  background: rgba(8,12,20,0.8); /* 半透明の背景（最初の値を--bgのRGBに合わせる） */
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid var(--border);
+}
+
+/* ロゴ（左上の名前） */
+.nav-logo {
+  font-family: var(--mono);
+  font-size: 18px;
+  color: var(--primary);
+  letter-spacing: 2px;
+  text-decoration: none;
+}
+
+/* ナビリンク */
+.nav-links {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+}
+
+.nav-links a {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--muted);
+  text-decoration: none;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: color 0.3s;
+}
+
+.nav-links a:hover { color: var(--primary); }
+
+
+/* ============================================================
+   ▼ セクション共通
+   ============================================================ */
+section {
+  position: relative;
+  z-index: 1;
+  max-width: 1000px; /* コンテンツの最大幅（広くしたい場合は数値を上げる） */
+  margin: 0 auto;
+  padding: 100px 40px;
+}
+
+/* セクションの小さいラベル（例：「01 — About」） */
+.section-label {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--primary);
+  letter-spacing: 3px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.section-label::after {
+  content: '';
+  flex: 1;
+  max-width: 60px;
+  height: 1px;
+  background: var(--primary);
+  opacity: 0.5;
+}
+
+/* セクションのタイトル（例：「作品一覧」） */
+.section-title {
+  font-size: clamp(28px, 4vw, 42px);
+  font-weight: 700;
+  margin-bottom: 48px;
+  line-height: 1.2;
+}
+
+
+/* ============================================================
+   ▼ ヒーロー（一番上の大きいエリア）
+   ============================================================ */
+#hero {
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  padding-top: 120px;
+}
+
+/* 「// Personal Developer」の小さいテキスト */
+.hero-eyebrow {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--primary);
+  letter-spacing: 4px;
+  text-transform: uppercase;
+  margin-bottom: 24px;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.2s;
+}
+
+/* 大きい名前（グラデーション） */
+.hero-name {
+  font-family: var(--mono);
+  font-size: clamp(52px, 10vw, 96px); /* clamp(最小, 画面幅に応じた値, 最大) */
+  font-weight: 700;
+  line-height: 1;
+  margin-bottom: 24px;
+  /* ▼ グラデーションの色（左から右へ3色） */
+  background: linear-gradient(135deg, var(--primary) 0%, var(--accent) 50%, var(--pink) 100%);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.4s;
+}
+
+/* キャッチコピーのテキスト */
+.hero-tagline {
+  font-size: 18px;
+  color: var(--muted);
+  max-width: 500px;
+  margin-bottom: 48px;
+  font-weight: 300;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.6s;
+}
+
+.hero-tagline span {
+  color: var(--text); /* <span>で囲まれた部分は白く強調 */
+  font-weight: 600;
+}
+
+/* ヒーローのボタンエリア */
+.hero-cta {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+  opacity: 0;
+  animation: fadeUp 0.8s ease forwards 0.8s;
+}
+
+
+/* ============================================================
+   ▼ ボタン
+   ============================================================ */
+
+/* 塗りつぶしボタン（「作品を見る」） */
+.btn-primary {
+  padding: 14px 28px;
+  background: linear-gradient(135deg, var(--primary), var(--accent)); /* グラデーション */
+  color: #ffffff; /* ボタン内の文字色 */
+  font-family: var(--mono);
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  border: none;
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.btn-primary:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px var(--primary-glow);
+}
+
+/* 枠線ボタン（「SNSをフォロー」） */
+.btn-outline {
+  padding: 14px 28px;
+  background: transparent;
+  color: var(--primary);
+  font-family: var(--mono);
+  font-size: 13px;
+  letter-spacing: 1px;
+  border: 1px solid var(--border);
+  border-radius: 4px;
+  cursor: pointer;
+  text-decoration: none;
+  transition: all 0.3s;
+  display: inline-block;
+}
+
+.btn-outline:hover {
+  border-color: var(--primary);
+  background: var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   ▼ 目次
+   ============================================================ */
+#toc { padding-top: 0; }
+
+.toc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1px;
+  background: var(--border);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  overflow: hidden;
+}
+
+.toc-item {
+  background: var(--surface);
+  padding: 24px;
+  text-decoration: none;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 12px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  transition: all 0.3s;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.toc-item:hover {
+  background: var(--surface2);
+  color: var(--primary);
+}
+
+/* 目次の番号（01, 02, 03） */
+.toc-num {
+  font-size: 10px;
+  color: var(--primary);
+  opacity: 0.6;
+}
+
+
+/* ============================================================
+   ▼ プロフィール
+   ============================================================ */
+.profile-grid {
+  display: grid;
+  grid-template-columns: auto 1fr;
+  gap: 48px;
+  align-items: start;
+}
+
+/* アバター（丸いアイコンエリア） */
+.profile-avatar {
+  width: 120px;
+  height: 120px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent));
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-family: var(--mono);
+  font-size: 32px;
+  font-weight: 700;
+  color: var(--bg);
+  flex-shrink: 0;
+  position: relative;
+}
+
+/* アバターの外側のリング */
+.profile-avatar::after {
+  content: '';
+  position: absolute;
+  inset: -3px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--primary), var(--accent), var(--pink));
+  z-index: -1;
+}
+
+.profile-name {
+  font-family: var(--mono);
+  font-size: 28px;
+  font-weight: 700;
+  color: var(--text);
+  margin-bottom: 8px;
+}
+
+/* 「Personal Developer」のテキスト */
+.profile-role {
+  font-family: var(--mono);
+  font-size: 12px;
+  color: var(--primary);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 16px;
+}
+
+.profile-bio {
+  color: var(--muted);
+  font-size: 15px;
+  line-height: 1.8;
+  margin-bottom: 24px;
+}
+
+.profile-bio span { color: var(--text); } /* <span>で囲まれた部分を強調 */
+
+/* 使用技術タグ */
+.tech-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+}
+
+.tech-tag {
+  padding: 4px 12px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--primary);
+}
+
+
+/* ============================================================
+   ▼ 作品カード
+   ============================================================ */
+.works-grid {
+  display: flex;
+  flex-direction: column;
+  gap: 24px;
+}
+
+.work-card {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 12px;
+  padding: 32px;
+  display: grid;
+  grid-template-columns: 1fr auto;
+  gap: 24px;
+  align-items: start;
+  transition: all 0.3s;
+  position: relative;
+  overflow: hidden;
+}
+
+/* カード左端のカラーライン（ホバー時に表示） */
+.work-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px;
+  height: 100%;
+  background: linear-gradient(to bottom, var(--primary), var(--accent));
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.work-card:hover {
+  border-color: rgba(99,179,237,0.4);
+  transform: translateX(4px);
+  box-shadow: 0 8px 32px rgba(0,0,0,0.3);
+}
+
+.work-card:hover::before { opacity: 1; }
+
+/* 開発中カードは少し薄く表示 */
+.work-card.wip { opacity: 0.6; }
+
+/* 「No.001」などの番号 */
+.work-number {
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--primary);
+  opacity: 0.6;
+  margin-bottom: 8px;
+}
+
+.work-title {
+  font-size: 22px;
+  font-weight: 700;
+  margin-bottom: 8px;
+  color: var(--text);
+}
+
+.work-desc {
+  color: var(--muted);
+  font-size: 14px;
+  line-height: 1.7;
+  margin-bottom: 16px;
+}
+
+/* 作品のタグ */
+.work-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.work-tag {
+  padding: 3px 10px;
+  background: var(--surface2);
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: var(--primary);
+}
+
+/* 「開く →」ボタン */
+.work-link {
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 20px;
+  background: transparent;
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  color: var(--primary);
+  font-family: var(--mono);
+  font-size: 12px;
+  text-decoration: none;
+  white-space: nowrap;
+  transition: all 0.3s;
+  flex-shrink: 0;
+  align-self: center;
+}
+
+.work-link:hover {
+  background: var(--primary-glow);
+  border-color: var(--primary);
+}
+
+/* 「● LIVE」バッジ（公開中） */
+.badge-live {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(72,187,120,0.15);
+  border: 1px solid rgba(72,187,120,0.3);
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #48bb78; /* 緑 */
+  margin-bottom: 8px;
+}
+
+/* 「◐ 開発中」バッジ */
+.badge-wip {
+  display: inline-block;
+  padding: 3px 10px;
+  background: rgba(246,173,85,0.15);
+  border: 1px solid rgba(246,173,85,0.3);
+  border-radius: 20px;
+  font-family: var(--mono);
+  font-size: 10px;
+  color: #f6ad55; /* オレンジ */
+  margin-bottom: 8px;
+}
+
+
+/* ============================================================
+   ▼ SNSカード
+   ============================================================ */
+.sns-grid {
+  display: flex;
+  gap: 16px;
+  flex-wrap: wrap;
+}
+
+.sns-card {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 16px 24px;
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 8px;
+  text-decoration: none;
+  color: var(--muted);
+  font-family: var(--mono);
+  font-size: 13px;
+  transition: all 0.3s;
+}
+
+.sns-card:hover {
+  border-color: var(--primary);
+  color: var(--primary);
+  background: var(--primary-glow);
+  transform: translateY(-2px);
+}
+
+
+/* ============================================================
+   ▼ フッター
+   ============================================================ */
+footer {
+  position: relative;
+  z-index: 1;
+  text-align: center;
+  padding: 40px;
+  border-top: 1px solid var(--border);
+  font-family: var(--mono);
+  font-size: 11px;
+  color: var(--muted);
+  letter-spacing: 1px;
+}
+
+
+/* ============================================================
+   ▼ アニメーション
+   ============================================================ */
+
+/* ページ読み込み時のフェードアップ（ヒーローエリア用） */
+@keyframes fadeUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* スクロール時のフェードイン（JS側で.visibleクラスを付与） */
+.fade-in {
+  opacity: 0;
+  transform: translateY(20px);
+  transition: opacity 0.6s ease, transform 0.6s ease;
+}
+
+.fade-in.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+
+/* ============================================================
+   ▼ レスポンシブ（スマホ・タブレット対応）
+   ============================================================ */
+@media (max-width: 768px) {
+  nav { padding: 16px 20px; }
+  .nav-links { gap: 16px; }
+  .nav-links a { font-size: 11px; }
+  section { padding: 80px 20px; }
+  .profile-grid { grid-template-columns: 1fr; gap: 24px; }
+  .work-card { grid-template-columns: 1fr; }
+  .work-link { align-self: start; }
+}
+
+@media (max-width: 480px) {
+  .nav-links { display: none; } /* スマホではナビリンクを非表示 */
+}
+.img {
+  max-width: 60%;
+  height: auto;
+  border-radius: 8px;
+}
